@@ -1,0 +1,4 @@
+1. netstat -tan | grep LIST
+2. netstat -tulpn
+3. netstat -nr  # routing tables
+4. 

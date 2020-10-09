@@ -1,0 +1,15 @@
+
+galaxy_info:
+author: ERIC
+description: ERI TEST
+company: SELF
+
+issue_tracker_url: https://atlassian.net/projects/INF/summary
+
+license: MIT
+
+min_ansible_version: 2.3
+
+galaxy_tags: []
+
+dependencies: []

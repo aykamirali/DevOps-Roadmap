@@ -1,0 +1,17 @@
+helm version --short
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm search repo stable
+helm repo update
+helm search repo nginx   #search nginx
+helm list
+helm create eksdemo
+helm install --debug --dry-run workshop ~/environment/eksdemo
+helm history name_of_package
+helm status name_of_package
+helm uninstall name_of_package
+helm install metrics-server stable/metrics-server --version 2.11.1 --namespace metrics
+
+helm completion bash >> ~/.bash_completion
+. /etc/profile.d/bash_completion.sh
+. ~/.bash_completion
+source <(helm completion bash)

@@ -1,0 +1,20 @@
+---
+# defaults file for aws-manage
+# AWS default settings
+aws_region: us-east-1
+
+# AWS security groups management default settings
+aws_sg_purge_rules: true
+aws_role: Administrators
+
+# IAM defaults
+# a static string we append before service accounts
+aws_iam_static_string: infra
+
+# ec2 defaults
+ec2_default_image_id:
+  ubuntu_xenial: "ami-a4dc46db"
+  ubuntu_bionic: "ami-0ac019f4fcb7cb7e6"  # Canonical, Ubuntu, 18.04 LTS, amd64 bionic image build on 2018-09-12
+ec2_default_purge_tags: true
+ec2_default_termination_protection: true
+ec2_default_detailed_monitoring: "enabled"

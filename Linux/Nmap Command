@@ -1,0 +1,31 @@
+Nmap is Linux command-line tool for network exploration and security auditing.
+This tool is generally used by hackers and cybersecurity enthusiasts and even
+by network and system administrators. It is used for the following purposes:
+
+Real time information of a network
+Detailed information of all the IPs activated on your network
+Number of ports open in a network
+Provide the list of live hosts
+Port, OS and Host scaning
+
+
+In case of Debian/Ubuntu
+sudo apt-get install nmap
+In case of CentOS/RedHat
+yum install nmap
+
+To scan multile hosts
+nmap 103.76.228.244 157.240.198.35 172.217.27.174
+
+To scan whole subnet
+nmap 103.76.228.*
+
+
+To scan to detect firewall settings.
+sudo nmap -sA 103.76.228.244
+
+To identify HostnamesTo scan from a file
+sudo nmap -sL  103.76.228.244
+
+To scan from a file
+nmap -iL input.txt

@@ -1,0 +1,1043 @@
+---
+# Note regarding the tons of comments: commented resources are either
+# 1) out-of-scope for the initial pass on this automation, OR
+# 2) out of scope for the slo-dev env altogether.
+# uncomment things and adapt them to slo-dev as needs arise
+# long sections may wind up containing many commented entries
+# and that is OK while we are building this up.
+aws_legacy_static_string: "est-slo-dev"
+aws_profile: "{{ aws_legacy_static_string }}-{{ aws_role }}"
+aws_vpc_id: vpc-0c43bc81b95c798e8
+aws_vpc_cidr_base: "172.42"
+aws_vpc_cidr: "{{ aws_vpc_cidr_base }}.0.0/16"
+aws_kms_key_id:
+  ebs: "65135f7d-b45e-4b45-bee6-63f12b90e1fe"
+
+# hard coding these since these don't change
+# this avoids having additional logic to get these from AWS
+# in-order
+aws_vpc_primary_private_subnet_ids:
+#   - 172.42.0.0/20
+  - subnet-055b78bcff78971c7
+#   - 172.42.16.0/20
+  - subnet-090fd5d66fe00240e
+#   - 172.42.64.0/20
+  - subnet-00e64f67bc6df977d
+
+aws_vpc_primary_public_subnet_ids:
+  # 172.42.32.0/20
+  - subnet-01ccacd17e6916d05
+  # 172.42.48.0/20
+  - subnet-07d33a174b56b7093
+  # we are missing a third public subnet
+  #- subnet-???
+
+#elasticache:
+#  - name: unified-log
+#    description: unified-log-elasticache-redis
+#    state: present
+#    engine: redis
+#    cache_engine_version: 3.2.4
+#    node_type: cache.t2.small
+#    num_nodes: 1
+#    cache_port: 6379
+#    cache_subnet_group: redis-subnet-group
+#    security_group_ids: "{{ security_group_status | json_query(\"results[?invocation.module_args.name=='gen-staging-redisunifiedlog-va-sg'].group_id\") }}"
+#    zone: "{{ aws_region }}a"
+
+security_groups:
+## generic security group to allow earnest internal traffic
+#  - name: "gen-{{ aws_env }}-trusted_earnest_internal-va-sg"
+#    description: Allow trusted traffic from earnest internal subnets
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports:
+#          - 22
+#          - 80
+#          - 443
+#        cidr_ip:
+#          - 192.168.48.0/22
+#          - 192.168.60.0/22
+#        group_id:
+#          - sg-03269bc1e12868bf7
+## generic security group to allow earnest traffic from public ip addresses
+#  - name: "gen-{{ aws_env }}-trusted_earnest_external-va-sg"
+#    description: Allow trusted traffic from earnest internal subnets
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip:
+#          - 64.125.36.170/32
+#          - 64.125.36.178/32
+## generic security group to allow earnest vpn traffic
+#  - name: "gen-{{ aws_env }}-trusted_earnest_vpn-va-sg"
+#    description: Allow trusted traffic from earnest vpn
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports:
+#          - 22
+#          - 80
+#          - 443
+#        group_id:
+#          - sg-50c12536
+#          - sg-03269bc1e12868bf7
+## include all private subnets to talk to redis
+#  - name: "gen-{{ aws_env }}-redisunifiedlog-va-sg"
+#    description: Redis security group for unified log - allow access from private subnets
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 6379
+#        cidr_ip:
+#          - "{{ aws_vpc_cidr_base }}.1.0/24"
+#          - "{{ aws_vpc_cidr_base }}.3.0/24"
+#          - "{{ aws_vpc_cidr_base }}.5.0/24"
+#          - "{{ aws_vpc_cidr_base }}.7.0/24"
+#          - "{{ aws_vpc_cidr_base }}.9.0/24"
+#          - "{{ aws_vpc_cidr_base }}.11.0/24"
+#          - "{{ aws_vpc_cidr_base }}.13.0/24"
+#          - "{{ aws_vpc_cidr_base }}.15.0/24"
+#          - "{{ aws_vpc_cidr_base }}.17.0/24"
+## Staging API Gateway Security Group - Internal & Developer Partners
+#  - name: "elb-{{ aws_env }}-kongapigateway-va-sg"
+#    description: Internal-use and dev partner Kong ELB API Gateway SG
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 64.125.36.170/32
+#        rule_desc: "Earnest Extranet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 64.125.36.178/32
+#        rule_desc: "Earnest Extranet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.0.159.18/32
+#        rule_desc: "Earnest Staging VPC"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 24.39.71.210/32
+#        rule_desc: "SharpNotions"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 167.104.7.1/32
+#        rule_desc: "Navient School Hub"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 167.104.7.2/32
+#        rule_desc: "Navient School Hub"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 167.104.7.3/32
+#        rule_desc: "Navient School Hub"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 167.104.7.4/32
+#        rule_desc: "Navient School Hub"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 167.104.7.5/32
+#        rule_desc: "Navient School Hub"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 201.174.145.42/32
+#        rule_desc: "Wizeline Guadalajara"
+#
+## Staging API Gateway Security Group - External Partners
+#  - name: "elb-{{ aws_env }}-kongapigateway-partners-va-sg"
+#    description: Customer Kong ELB API Gateway SG
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 54.164.236.222/32
+#        rule_desc: "NerdWallet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 54.88.125.69/32
+#        rule_desc: "NerdWallet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 54.85.5.45/32
+#        rule_desc: "NerdWallet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.73.52.7/32
+#        rule_desc: "NerdWallet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 4.7.8.105/32
+#        rule_desc: "NerdWallet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 4.7.8.106/32
+#        rule_desc: "NerdWallet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 4.7.8.107/32
+#        rule_desc: "NerdWallet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 4.7.8.108/32
+#        rule_desc: "NerdWallet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 4.7.8.109/32
+#        rule_desc: "NerdWallet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 4.7.8.110/32
+#        rule_desc: "NerdWallet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 3.136.2.57/32
+#        rule_desc: "Nerdwallet WFH"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 18.176.15.2/32
+#        rule_desc: "Nerdwallet WFH"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 35.166.81.35/32
+#        rule_desc: "Nerdwallet WFH"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.200.2.8/32
+#        rule_desc: "StudentLoanHero"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.203.111.140/32
+#        rule_desc: "Bankrate"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 54.209.199.49/32
+#        rule_desc: "LendingTree"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 54.208.145.91/32
+#        rule_desc: "LendingTree"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 54.209.114.236/32
+#        rule_desc: "LendingTree"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 54.209.197.116/32
+#        rule_desc: "LendingTree"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 147.75.21.118/32
+#        rule_desc: "Monevo"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 147.75.0.70/32
+#        rule_desc: "Monevo"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 147.75.0.71/32
+#        rule_desc: "Monevo"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 166.78.47.163/32
+#        rule_desc: "Monevo"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 148.62.14.39/32
+#        rule_desc: "Monevo"
+#      # INF-3451
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 99.80.24.253/32
+#        rule_desc: "Fiizy"
+#      # INF-3651
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 84.50.154.75/32
+#        rule_desc: "Fiizy (office)"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.50.40.144/32
+#        rule_desc: "Fiizy (office)"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 192.237.202.152/32
+#        rule_desc: "LendEDU"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 204.93.207.42/32
+#        rule_desc: "Sertifi"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 107.21.57.45/32
+#        rule_desc: "Sertifi"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 104.245.209.204/32
+#        rule_desc: "Sertifi"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 204.93.207.36/32
+#        rule_desc: "Sertifi"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 207.250.84.178/32
+#        rule_desc: "Synopsis"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 216.85.161.194/32
+#        rule_desc: "Synopsis"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 64.128.208.115/32
+#        rule_desc: "Synopsis"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 198.182.55.28/32
+#        rule_desc: "Synopsis"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 198.182.52.26/32
+#        rule_desc: "Synopsis"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 216.85.161.214/32
+#        rule_desc: "Synopsis"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 198.182.55.12/32
+#        rule_desc: "Synopsis"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 34.193.150.126/32
+#        rule_desc: "Even Financial"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.204.229.235/32
+#        rule_desc: "Even Financial"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.204.229.64/32
+#        rule_desc: "Even Financial"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.204.230.77/32
+#        rule_desc: "Even Financial"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.204.226.99/32
+#        rule_desc: "Even Financial"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.2.178.231/32
+#        rule_desc: "Even Financial"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.21.26.131/32
+#        rule_desc: "Plaid Connection INF-4241"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.21.47.157/32
+#        rule_desc: "Plaid Connection INF-4241"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.41.247.19/32
+#        rule_desc: "Plaid Connection INF-4241"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 52.88.82.239/32
+#        rule_desc: "Plaid Connection INF-4241"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 3.218.224.63/32
+#        rule_desc: "Splash Financial"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 18.205.65.249/32
+#        rule_desc: "Splash Financial"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 104.214.53.215/32
+#        rule_desc: "Purefy"
+#
+## This gives Distil Networks access to staging API during PoC
+#  - name: "elb-{{ aws_env }}-distilnetworks_whitelist-va-sg"
+#    description: Allow Distil Networks during PoC
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip:
+#          - 192.225.214.131/32
+#          - 192.225.208.0/20
+#          - 103.226.68.0/22
+#          - 45.250.72.0/22
+#          - 185.154.244.0/22
+## This gives Cloudflare access to staging API during PoC
+## https://www.cloudflare.com/ips/
+#  - name: "elb-{{ aws_env }}-cloudflare_whitelist-va-sg"
+#    description: Allow Cloudflare during PoC
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip:
+#          - 103.21.244.0/22
+#          - 103.22.200.0/22
+#          - 103.31.4.0/22
+#          - 104.16.0.0/12
+#          - 108.162.192.0/18
+#          - 131.0.72.0/22
+#          - 141.101.64.0/18
+#          - 162.158.0.0/15
+#          - 172.64.0.0/13
+#          - 173.245.48.0/20
+#          - 188.114.96.0/20
+#          - 190.93.240.0/20
+#          - 197.234.240.0/22
+#          - 198.41.128.0/17
+#  - name: "rds-{{ aws_env }}-redshift-va-sg"
+#    description: Redshift security group
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 5439
+#        cidr_ip: "172.18.0.0/16"
+#        rule_desc: "Staging VPC"
+#      - proto: tcp
+#        ports: 5439
+#        cidr_ip: "172.28.4.0/22"
+#        rule_desc: "Staging Data VPC"
+#      - proto: tcp
+#        ports: 5439
+#        cidr_ip: "52.0.159.18/32"
+#        rule_desc: "Staging NAT Gateway"
+#      - proto: tcp
+#        ports: 5439
+#        cidr_ip:
+#          - 64.125.36.170/32
+#          - 64.125.36.178/32
+#        rule_desc: "Earnest Extranet"
+#      - proto: tcp
+#        ports: 5439
+#        cidr_ip: "192.168.60.0/22"
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 5439
+#        cidr_ip: "192.168.48.0/22"
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 5439
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#  - name: "rds-{{ aws_env }}-k8smaster-va-sg"
+#    description: k8smaster {{ aws_env }} database security group
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 5432
+#        cidr_ip: "172.18.0.0/16"
+#        rule_desc: "Staging VPC"
+#      - proto: tcp
+#        ports: 5432
+#        cidr_ip: "192.168.60.0/22"
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 5432
+#        cidr_ip: "192.168.48.0/22"
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 5432
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#      - proto: tcp
+#        ports: 5432
+#        group_id: sg-0dfe02e011935b730
+#        rule_desc: "Allow blessed Jenkins workers to connect to k8s RDS for automation"
+#  - name: "rds-{{ aws_env }}-looker-va-sg"
+#    description: Looker security group
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 3306
+#        group_id: sg-1a74cf53
+#        rule_desc: "Staging RDS"
+#  - name: "rds-{{ aws_env }}-staging-encrypted-restored-va-sg"
+#    description: "staging-encrypted-restored {{ aws_env }} database security group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 5432
+#        cidr_ip: "172.18.0.0/16"
+#        rule_desc: "Staging VPC"
+#      - proto: tcp
+#        ports: 5432
+#        cidr_ip: "192.168.60.0/22"
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 5432
+#        cidr_ip: "192.168.48.0/22"
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 5432
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#  - name: "rds-{{ aws_env }}-production-encrypted-sanitized-va-sg"
+#    description: "production-encrypted-sanitized {{ aws_env }} database security group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 5432
+#        cidr_ip: "172.18.0.0/16"
+#        rule_desc: "Staging VPC"
+#      - proto: tcp
+#        ports: 5432
+#        cidr_ip: "192.168.60.0/22"
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 5432
+#        cidr_ip: "192.168.48.0/22"
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 5432
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#  - name: "ins-{{ aws_env }}-looker-va-sg"
+#    description: "Looker security group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 19999
+#        group_id: sg-ea873ca3
+#        rule_desc: "ELB - API Access"
+#      - proto: tcp
+#        ports: 9999
+#        group_id: sg-ea873ca3
+#        rule_desc: "ELB - Looker Access"
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: "192.168.60.0/22"
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: "192.168.48.0/22"
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 22
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#      - proto: tcp
+#        ports: 22
+#        group_id: sg-03269bc1e12868bf7
+#        rule_desc: "Nessus"
+#  - name: "elb-{{ aws_env }}-looker-va-sg"
+#    description: "Look {{ aws_env }} ELB Security Group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 19999
+#        cidr_ip: "192.168.60.0/22"
+#        rule_desc: "Earnest Intranet Ethernet - API Access"
+#      - proto: tcp
+#        ports: 19999
+#        cidr_ip: "192.168.48.0/22"
+#        rule_desc: "Earnest Intranet Wifi - API Access"
+#      - proto: tcp
+#        ports: 19999
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN - API Access"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: "192.168.60.0/22"
+#        rule_desc: "Earnest Intranet Ethernet - API Access"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: "192.168.48.0/22"
+#        rule_desc: "Earnest Intranet Wifi - API Access"
+#      - proto: tcp
+#        ports: 443
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN - API Access"
+#  - name: "ec2-{{ aws_env }}-sftp-va-sg"
+#    description: "SFTP {{ aws_env }} Security Group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: "192.168.60.0/22"
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: "192.168.48.0/22"
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 22
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#      - proto: tcp
+#        ports: 22
+#        group_id: sg-05176132db9218c23
+#        rule_desc: "SFTP Public ELB"
+#      - proto: tcp
+#        ports: 22
+#        group_id: sg-03269bc1e12868bf7
+#        rule_desc: "Nessus"
+#  - name: "elb-{{ aws_env }}-sftp-va-sg"
+#    description: "SFTP {{ aws_env }} ELB Security Group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip:
+#          - 167.104.7.0/32
+#          - 167.104.7.1/32
+#          - 167.104.7.2/32
+#          - 167.104.7.3/32
+#          - 167.104.7.4/32
+#          - 167.104.7.5/32
+#          - 167.104.7.6/32
+#          - 167.104.7.7/32
+#          - 167.104.7.8/32
+#          - 167.104.7.9/32
+#          - 167.104.7.10/32
+#          - 167.104.7.11/32
+#          - 167.104.7.12/32
+#          - 167.104.7.13/32
+#          - 167.104.7.14/32
+#          - 167.104.7.15/32
+#        rule_desc: "Navient - SFTP Access"
+#  - name: "elb-{{ aws_env }}-matillion-va-sg"
+#    description: "Matillion {{ aws_env }} ELB Security Group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 192.168.60.0/22
+#        rule_desc: "Earnest Intranet Ethernet - API Access"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 192.168.48.0/22
+#        rule_desc: "Earnest Intranet Wifi - API Access"
+#      - proto: tcp
+#        ports: 443
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN - API Access"
+#  - name: "ec2-{{ aws_env }}-pgdumphost-va-sg"
+#    description: "Postgres Backup Host {{ aws_env }} EC2 Security Group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: 192.168.60.0/22
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: 192.168.48.0/22
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 22
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#  - name: "ec2-{{ aws_env }}-agiloft-va-sg"
+#    description: "Agiloft {{ aws_env }} EC2 Security Group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: 192.168.60.0/22
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: 192.168.48.0/22
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 22
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 192.168.60.0/22
+#        rule_desc: "HTTPS from Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 192.168.48.0/22
+#        rule_desc: "HTTPS from Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 443
+#        group_id: sg-50c12536
+#        rule_desc: "HTTPS from Earnest VPN"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 172.18.0.0/16
+#        rule_desc: "HTTPS from kubernetes-vpc for monolith"
+#  - name: "ec2-{{ aws_env }}-rdstoolsworker-va-sg"
+#    description: "RDS Tools Worker {{ aws_env }} EC2 Security Group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: "{{ aws_vpc_cidr }}"
+#        rule_desc: "{{ aws_env }} VPC"
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: 192.168.60.0/22
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: 192.168.48.0/22
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 22
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#  - name: "elb-{{ aws_env }}-api-va-sg"
+#    description: "API {{ aws_env }} ELB Security Group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: "{{ aws_vpc_cidr }}"
+#        rule_desc: "{{ aws_env }} VPC"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 192.168.60.0/22
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 192.168.48.0/22
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 443
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 172.18.79.0/24
+#        rule_desc: "Navient"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 172.23.0.0/16
+#        rule_desc: "Navient"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 172.24.0.0/16
+#        rule_desc: "Navient"
+#      - proto: tcp
+#        ports: 443
+#        group_id: sg-0ab5052bdab88f4ed
+#        rule_desc: "Saucelabs"
+#      - proto: tcp
+#        ports: 443
+#        group_id: sg-015d937e
+#        rule_desc: "Jenkins"
+#  - name: "elb-{{ aws_env }}-www-va-sg"
+#    description: "WWW {{ aws_env }} ELB Security Group"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: "{{ aws_vpc_cidr }}"
+#        rule_desc: "{{ aws_env }} VPC"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 192.168.60.0/22
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 443
+#        cidr_ip: 192.168.48.0/22
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 443
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#      - proto: tcp
+#        ports: 443
+#        group_id: sg-0ab5052bdab88f4ed
+#        rule_desc: "Saucelabs"
+#      - proto: tcp
+#        ports: 443
+#        group_id: sg-015d937e
+#        rule_desc: "Jenkins"
+## OPSWORKS
+#  - name: "opsworks-{{ aws_env }}-common-va-sg"
+#    description: "Defaults for all stacks and all layers"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: 192.168.60.0/22
+#        rule_desc: "Earnest Intranet Ethernet"
+#      - proto: tcp
+#        ports: 22
+#        cidr_ip: 192.168.48.0/22
+#        rule_desc: "Earnest Intranet Wifi"
+#      - proto: tcp
+#        ports: 22
+#        group_id: sg-50c12536
+#        rule_desc: "Earnest VPN"
+#      - proto: tcp
+#        ports: 22
+#        group_id: sg-03269bc1e12868bf7
+#        rule_desc: "Nessus"
+#      - proto: tcp
+#        ports: 5666
+#        group_id: sg-68530617
+#        rule_desc: "Nagios"
+#  - name: "opsworks-{{ aws_env }}-layerwebserver-va-sg"
+#    description: "Opsworks Stack {{ aws_env }} Layer Static Web Server"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 80
+#        group_id: sg-0b65a07991060c5aa
+#        rule_desc: "WWW ELB"
+#      - proto: tcp
+#        ports: 443
+#        group_id: sg-0b65a07991060c5aa
+#        rule_desc: "WWW ELB"
+#  - name: "opsworks-{{ aws_env }}-layernode-va-sg"
+#    description: "Opsworks Stack {{ aws_env }} Layer Nodejs"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 80
+#        group_id: sg-083e8e012b183a843
+#        rule_desc: "API ELB"
+#  - name: "opsworks-{{ aws_env }}-layersaucelabs-va-sg"
+#    description: "Opsworks Stack {{ aws_env }} Layer Saucelabs"
+#    purge_rules: "{{ aws_sg_purge_rules }}"
+#    rules:
+#      - proto: tcp
+#        ports: 80
+#        group_id: sg-083e8e012b183a843
+#        rule_desc: "API ELB"
+
+#dynamodb_table:
+#  - name: unified-log.config
+#    hash_key_name: app_name
+#    hash_key_type: STRING
+#    range_key_name: updated_at
+#    range_key_type: STRING
+#    read_capacity: 5
+#    write_capacity: 5
+#
+#sqs:
+#  - name: lendingqb-gateway
+#  - name: loanpro-gateway-service
+## (INF-2784)
+#  - name: staging-slo-app-workflow
+## (INF-2824)
+#  - name: slo-decide-events
+#  - name: slo-decide-events-dead-letter-queue
+## (INF-2877)
+#  - name: slo-certification-requests
+#  - name: slo-certification-responses
+## (INF-2955)
+#  - name: loan-boarded-events
+## (INF-3716)
+#  - name: monolith-to-k8s-task-runner-test
+#  - name: monolith-to-k8s-task-runner-test-intuit
+## (INF-3893)
+#  - name: loan-status-tracking
+## (INF-4398)
+#  - name: apem-events
+#
+#sns:
+#  - name: lendingqb-gateway
+#    subscriptions:
+#      - endpoint: "arn:aws:sqs:us-east-1:644712362974:lendingqb-gateway"
+#        protocol: sqs
+
+iam:
+  #### The following section defines IAM policy for IAM user
+  #
+  # Rit commented home user in the initial commit for slo-dev because the home
+  # product has been retired
+  #  - name: home
+  #    type: user
+  #    policy_type: custom
+  - name: lendingqb-gateway
+    type: user
+    policy_type: custom
+  - name: loanpro-reporting
+    type: user
+    policy_type: custom
+  - name: loanpro-gateway-service
+    type: user
+    policy_type: custom
+  # (PLAT-1467)
+  - name: accredited-school-service
+    type: user
+    policy_type: custom
+  # (DATA-1681)
+  - name: navient-servicing-data-provider
+    type: user
+    policy_type: custom
+  # (PLAT-2016)
+  - name: credit-report-review
+    type: user
+    policy_type: custom
+  - name: ui-crane
+    type: user
+    policy_type: custom
+  - name: boarding-service
+    type: user
+    policy_type: custom
+  - name: lambda-k8s-async-task-scheduler-deploy
+    type: user
+    policy_type: custom
+  - name: sftp-server
+    type: user
+    policy_type: custom
+  - name: pl-boarding-service
+    type: user
+    policy_type: custom
+  - name: sst-ingestion
+    type: user
+    policy_type: custom
+  - name: pgdump-archiver
+    type: user
+    policy_type: custom
+  # (INF-2822)
+  - name: sst-finance-shared
+    type: user
+    policy_type: custom
+  # (INF-2816)
+  - name: slo-service
+    type: user
+    policy_type: custom
+  # (INF-2872 plus backfill existing user)
+  - name: applicationinfo
+    type: user
+    policy_type: custom
+  # (INF-2877)
+  - name: slo-certification-service
+    type: user
+    policy_type: custom
+  # (INF-2933)
+  - name: analyze-api
+    type: user
+    policy_type: custom
+  # (INF-2953)
+  - name: audit-package-elements
+    type: user
+    policy_type: custom
+  # (INF-2951)
+  - name: audit
+    type: user
+    policy_type: custom
+  # (INF-3289)
+  - name: earnest-continuous-deploy
+    type: user
+    policy_type: custom
+  # (INF-3554,INF-3630)
+  - name: internal-rest-service
+    type: user
+    policy_type: custom
+  # (INF-3661)
+  - name: loan-service
+    type: user
+    policy_type: custom
+  # (INF-3893)
+  - name: servicing-reliquary-account-service
+    type: user
+    policy_type: custom
+  # (INF-4124)
+  - name: feed-ingestion
+    type: user
+    policy_type: custom
+
+      #  #### The following section defines IAM policy for IAM role
+      #  # (INF-3159)
+      #  - name: dataeng-redshift-manage-permissions
+      #    role_name: Eng2
+      #    type: role
+      #    policy_type: custom
+      #  # (INF-3042)
+      #  - name: security-readonly
+      #    role_name: Security
+      #    type: role
+      #    policy_type: custom
+      #  - name: lacework-monolith-readonly
+      #    role_name: aws-opsworks-ec2-role
+      #    type: role
+      #    policy_type: custom
+
+      #iam_role:
+      #  - name: Security
+      #    description: "A role for Earnest Security Team to investigate incidents and manage security groups"
+
+#s3:
+#  # (PLAT-1467)
+#  - name: accredited-school-service-staging
+#  # (DATA-1681)
+#  - name: navient-servicing-data-provider-staging
+#  # (PLAT-2016)
+#  - name: credit-report-review-staging
+#  # (INF-2147)
+#  - name: est-staging-ui-crane
+#    DANGEROUSLY_SET_THE_BUCKET_TO_PUBLIC_I_KNOW_WHAT_I_AM_DOING: true
+#  - name: boarding-service-staging
+#  # (INF-2718)
+#  - name: pl-boarding-service-staging
+#  # (INF-2683)
+#  - name: est-staging-matillion
+#  # (INF-2746)
+#  - name: sst-ingestion-staging
+#  # (INF-2953)
+#  - name: audit-package-elements-staging
+#  # (INF-3181)
+#  - name: est-client-files-source-staging
+#  # (INF-3661)
+#  - name: est-staging-incoming-loan-data
+#  # (INF-3692)
+#  - name: earnest-staging-data-infrastructure-terraform-state
+#  # (INF-4124)
+#  - name: feed-ingestion-staging
+#  # (INF-4352)
+#  - name: est-staging-cloudtrail-s3-auditing
+#
+## volume_size_gb doesn't work yet, will be hardcoding this to 100Gb for all instances
+## See
+##   - https://github.com/ansible/ansible/issues/30366
+##   - https://github.com/ansible/ansible/pull/32738
+##   - https://github.com/ansible/ansible/pull/23943
+#ec2:
+#  - name: SFTP
+#    image_id: "{{ ec2_default_image_id.ubuntu_xenial }}"
+#    instance_initiated_shutdown_behavior: stop
+#    instance_type: t2.small
+#    key_name: staging-sftp-20180522
+#    purge_tags: "{{ ec2_default_purge_tags }}"
+#    security_group: "ec2-{{ aws_env }}-sftp-va-sg"
+#    volume_size_gb: 100
+#    tags:
+#      Name: "SFTP"
+#      OS: "Ubuntu"
+#      ansible_managed: "yes"
+#    termination_protection: "{{ ec2_default_termination_protection }}"
+#    vpc_subnet_id: "{{ aws_vpc_primary_private_subnet_ids[0] }}"
+#    detailed_monitoring: "{{ ec2_default_detailed_monitoring }}"
+#
+#elb:
+#  - name: SFTP
+#    cross_az_load_balancing: no
+#    health_check:
+#      ping_protocol: tcp
+#      ping_port: 22
+#      response_timeout: 5
+#      interval: 30
+#      unhealthy_threshold: 6
+#      healthy_threshold: 2
+#    instance_ids:
+#      - i-0943384ac7780019a
+#    listeners:
+#      - protocol: tcp
+#        load_balancer_port: 22
+#        instance_port: 22
+#    scheme: internet-facing
+#    security_group_names: "elb-{{ aws_env }}-sftp-va-sg"
+#    subnets: "{{ aws_vpc_primary_public_subnet_ids }}"

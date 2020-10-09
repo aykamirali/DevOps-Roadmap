@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Id": "arn:aws:sqs:us-east-1:075440130607:lendingqb-gateway/SQSDefaultPolicy",
+  "Statement": [
+    {
+      "Sid": "Sid1501886919253",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "SQS:SendMessage",
+      "Resource": "arn:aws:sqs:us-east-1:075440130607:lendingqb-gateway",
+      "Condition": {
+        "ArnEquals": {
+          "aws:SourceArn": "arn:aws:sns:us-east-1:075440130607:lendingqb-gateway"
+        }
+      }
+    }
+  ]
+}

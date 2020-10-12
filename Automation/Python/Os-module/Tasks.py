@@ -52,6 +52,7 @@ for entry in os.scandir(root):
 Test the existence, readability, writability and executability of the specified path.
 
 import os
+print(os.access('EngineerBP',os.F_OK))
 print('Exist:', os.access('c:\\Users\\Public\\C programming library.docx', os.F_OK))
 print('Readable:', os.access('c:\\Users\\Public\\C programming library.docx', os.R_OK))
 print('Writable:', os.access('c:\\Users\\Public\\C programming library.docx', os.W_OK))
@@ -73,4 +74,4 @@ print('Created     :', time.ctime(stat_info.st_ctime))
 print('Last modified:', time.ctime(stat_info.st_mtime))
 print('Last accessed:', time.ctime(stat_info.st_atime))
 
-6. 
+6.

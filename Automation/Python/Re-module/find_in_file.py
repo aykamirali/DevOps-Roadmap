@@ -16,5 +16,3 @@ with urlopen('https://www.python-course.eu/simpsons_phone_book.txt') as fh:
         line = line.decode('utf-8').rstrip()
         if re.search(r"J.*Neu",line):
             print(line)
-
-            

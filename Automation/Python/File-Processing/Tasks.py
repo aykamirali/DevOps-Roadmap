@@ -94,3 +94,75 @@ print(content.read())
 13. Write a Python program to copy the contents of a file to another file:
 from shutil import copyfile
 copyfile('test.py', 'abc.py')
+
+14. Write a Python program to combine each line from first file with the corresponding line in second file.
+
+with open('abc.txt') as fh1, open('test.txt') as fh2:
+    for line1, line2 in zip(fh1, fh2):
+        # line1 from abc.txt, line2 from test.txtg
+        print(line1+line2)
+
+
+
+15. Write a Python program to read a random line from a file.
+import random
+def random_line(fname):
+    op=open(fname).read().splitlines()
+    return random.choice(op)
+
+16. Write a Python program to assess if a file is closed or not.
+
+ f = open('abc.txt','r')
+print(f.closed)
+f.close()
+print(f.closed)
+
+
+17. Write a Python program to remove newline characters from a file.
+
+def remove_newlines(fname):
+    flist = open(fname).readlines()
+    return [s.rstrip('\n') for s in flist]
+
+print(remove_newlines("test.txt"))
+
+18. Write a Python program that takes a text file as input and returns the number of words of a given text file.
+
+def find_words(fname):
+    l=open(fname).read().split()
+    print(len(l))
+
+19. Write a Python program that takes a text file as input and returns the number of words of a given text file. Go to the editor
+Note: Some words can be separated by a comma with no space.
+def count_words(filepath):
+   with open(filepath) as f:
+       data = f.read()
+       data.replace(",", " ")
+       return len(data.split(" "))
+print(count_words("words.txt"))
+
+20. Write a Python program to extract characters from various text files and puts them into a list.
+import glob
+char_list = []
+files_list = glob.glob("*.txt")
+for file_elem in files_list:
+   with open(file_elem, "r") as f:
+       char_list.append(f.read())
+print(char_list)
+
+21. Write a Python program to generate 26 text files named A.txt, B.txt, and so on up to Z.txt.
+import string, os
+if not os.path.exists("letters"):
+   os.makedirs("letters")
+for letter in string.ascii_uppercase:
+   with open(letter + ".txt", "w") as f:
+       f.writelines(letter)
+
+22. Write a Python program to create a file where all letters of English alphabet are listed by specified number of letters on each line.
+import string
+def letters_file_line(n):
+   with open("words1.txt", "w") as f:
+       alphabet = string.ascii_uppercase
+       letters = [alphabet[i:i + n] + "\n" for i in range(0, len(alphabet), n)]
+       f.writelines(letters)
+letters_file_line(3)

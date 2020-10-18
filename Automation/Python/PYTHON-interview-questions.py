@@ -64,3 +64,37 @@ for i in L:
     d[len(str(i))].append(i)
 print d
 print {k:v for k,v in d.items()}
+
+
+
+4. The usage of os.path.dirname() & os.path.basename()
+>>> os.path.dirname('/home/k/TEST/PYTHON/p.py')
+'/home/k/TEST/PYTHON'
+
+>>> os.path.basename('/home/k/TEST/PYTHON/p.py')
+'p.py'
+
+>>> os.path.split('/home/k/TEST/PYTHON/p.py')
+('/home/k/TEST/PYTHON', 'p.py')
+>>> os.path.join('/home/k/TEST/PYTHON', 'p.py')
+'/home/k/TEST/PYTHON/p.py'
+
+5.>>> import os
+>>> print(os.getcwd())
+C:\Python32
+>>> cur_dir = os.curdir
+>>> print(cur_dir)
+.
+>>> scripts_dir = os.path.join(os.curdir, 'Tools\Scripts')
+>>> print(scripts_dir)
+.\Tools\Scripts
+>>> diff_py = os.path.join(scripts_dir, 'diff.py')
+>>> print(diff_py)
+.\Tools\Scripts\diff.py
+>>> os.path.basename(diff_py)
+' diff.py'
+>>> os.path.splitext(diff_py)
+('.\\Tools\\Scripts\\diff', '.py')
+print(os.path.expanduser('~'))
+
+6.

@@ -52,3 +52,11 @@ result = running_min_product((1,3,3,7,9,8,10,9,8,0,11,15,7))
 print("Running minimum value of a Tuple:")
 for i in result:
     print(i)
+
+4. >>> [x for x in itertools.permutations('123')]
+[('1', '2', '3'), ('1', '3', '2'), ('2', '1', '3'), ('2', '3', '1'), ('3', '1', '2'), ('3', '2', '1')]
+>>> [x for x in itertools.permutations('123',2)]
+[('1', '2'), ('1', '3'), ('2', '1'), ('2', '3'), ('3', '1'), ('3', '2')]
+>>>
+
+5. 

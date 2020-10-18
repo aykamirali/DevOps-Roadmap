@@ -40,7 +40,6 @@ with open('path/to/file.txt', 'r') as file:
 		if stringToMatch in line:
 			matchedLine = line
             			break
-
 #and write it to the file
 with opne('path/to/new/file.txt', 'w') as file:
 	file.write(matchedLine)
@@ -67,4 +66,4 @@ for line in lines:
   words = line.strip("\n").split()
   print(words)
 
- 6. 
+ 6.

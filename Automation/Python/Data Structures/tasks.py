@@ -20,3 +20,5 @@ def list_sum(num_List):
       return to_string(n//base,base) + conver_tString[n % base]
 
 print(to_string(2835,16))
+
+3. 

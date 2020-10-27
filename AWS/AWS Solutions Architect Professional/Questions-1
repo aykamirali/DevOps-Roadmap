@@ -286,4 +286,4 @@ is a match. If a match is found, the location must be saved along with the times
     You do not need to use Jenkins to pre-process the template and there are no "Fn::Case" and "Fn::Switch" intrinsic
     functions. CloudFormation conditions
 
-23. 
+23.

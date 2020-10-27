@@ -1,4 +1,5 @@
 CREATE S3 BUCKET AND IAM ROLE FOR VELERO:
+
 Velero uses AWS S3 bucket to backup EKS cluster. It uploads a tarball of copied Kubernetes objects into S3 bucket.
 Let’s create an S3 bucket to backup our EKS cluster.
 
@@ -28,6 +29,7 @@ echo "export VELERO_BUCKET=${VELERO_BUCKET}" | tee -a ~/.bash_profile
 
 
 Create an IAM user for Velero:
+
 aws iam create-user --user-name velero
 
 cat > velero-policy.json <<EOF

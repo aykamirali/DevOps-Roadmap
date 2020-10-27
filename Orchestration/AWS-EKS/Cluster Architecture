@@ -17,9 +17,6 @@ AWS infrastructure (like load balancers) used by the cluster.
  Even when the private endpoint is disabled, EKS still provisions ENIs to allow
  for actions that originate from the Kubernetes API server, such as kubectl exec and logs.
 
- If the node is unable to reach the cluster endpoint, it’s unable to register with
-  the control plane and thus unable to receive commands to start or stop pods.
-  If new nodes are unable to connect, this prevents you from being able to use these nodes as part of the cluster.
-
-
-  
+If the node is unable to reach the cluster endpoint, it’s unable to register with
+the control plane and thus unable to receive commands to start or stop pods.
+If new nodes are unable to connect, this prevents you from being able to use these nodes as part of the cluster.

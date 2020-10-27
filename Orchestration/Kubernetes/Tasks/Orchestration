@@ -1,7 +1,6 @@
 What is container orchestration used for?
 Use container orchestration to automate and manage tasks such as:
-
-Provisioning and deployment
+Provisioning  and deployment
 Configuration and scheduling
 Resource allocation
 Container availability

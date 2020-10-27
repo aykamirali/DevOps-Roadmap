@@ -6,9 +6,10 @@ kubectl apply -f storage-class.yaml
 
 
 Deploy Wordpress and MySQL in the staging namespace
-Create a kubernetes secret for MySQL DB password
 
+Create a kubernetes secret for MySQL DB password:
 kubectl create secret generic mysql-pass --from-literal=password=velerodemo -n staging
+
 wget https://eksworkshop.com/intermediate/280_backup-and-restore/backupandrestore.files/mysql-deployment.yaml
 wget https://eksworkshop.com/intermediate/280_backup-and-restore/backupandrestore.files/wordpress-deployment.yaml
 Deploy MySQL and Wordpress

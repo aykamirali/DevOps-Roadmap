@@ -13,7 +13,6 @@ AWS Certified Solutions Architect - Professional 2020
    single account and register all sub-accounts to that billing account.
    Create localized IAM Admin accounts for each sub-account.
 
-
    Service Control Policies are an effective way to broadly restrict access to certain
    features of sub-accounts. Use of a single separate logging account is an
    effective way to create a secure logging repository.

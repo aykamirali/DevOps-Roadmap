@@ -1,3 +1,4 @@
+
 '''
 Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
@@ -7,7 +8,6 @@ Licensed under the Apache License, Version 2.0 (the "License"). You may not use 
 
 or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 '''
-
 # delete_old_snapshots_dest_rds
 # This lambda function will delete manual RDS snapshots that have expired in the region specified in the environment variable DEST_REGION, and according to the environment variables SNAPSHOT_PATTERN and RETENTION_DAYS.
 # Set SNAPSHOT_PATTERN to a regex that matches your RDS Instance identifiers

@@ -1,5 +1,6 @@
+
 '''
-Copyright 2017  Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
 
@@ -8,11 +9,6 @@ Licensed under the Apache License, Version 2.0 (the "License"). You may not use 
 or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 '''
 
-# copy_snapshots_no_x_account_
-# This lambda function will copy source RDS snapshots that match the regex specified in the environment variable PATTERN into DEST_REGION. This function will need to run as many times necessary for the workflow to complete.
-# Set PATTERN to a regex that matches your RDS isntance identifiers 
-# Set DEST_REGION to the destination AWS region
-import boto3
 from datetime import datetime
 import time
 import os
@@ -68,7 +64,7 @@ def lambda_handler(event, context):
                     if source_snapshots[source_identifier]['Status'] == 'available':
                         try:
                             copy_remote(source_identifier, own_snapshots_encryption[source_identifier])
-                 
+
                         except Exception as e:
                             pending_copies += 1
                             logger.error('Remote copy pending: %s: %s (%s)' % (
@@ -80,11 +76,11 @@ def lambda_handler(event, context):
             else:
                 logger.info('Not copying %s. Older than %s days' % (source_identifier, RETENTION_DAYS))
 
-        else: 
+        else:
             logger.info('Not copying %s. No valid timestamp' % source_identifier)
-    else: 
+    else:
 	    logger.debug('No further snapshots found')
-		
+
     if pending_copies > 0:
         log_message = 'Copies pending: %s. Needs retrying' % pending_copies
         logger.error(log_message)

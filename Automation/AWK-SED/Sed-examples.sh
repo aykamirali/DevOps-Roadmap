@@ -19,7 +19,6 @@
 7. Duplicating the replaced line with /p flag
   sed 's/unix/linux/p' geekfile.txt
 
-
 8. Printing only the replaced lines:
   sed -n 's/unix/linux/p' geekfile.txt
 
@@ -35,13 +34,11 @@ $ sed 'x,yd' filename.txt
 Example:
 $ sed '3,6d' filename.txt
 
-
 13. To Delete from nth to last line:
 Syntax:
 $ sed 'nth,$d' filename.txt
 Example:
 $ sed '12,$d' filename.txt
-
 
 13. To Delete pattern matching line:
 Syntax:

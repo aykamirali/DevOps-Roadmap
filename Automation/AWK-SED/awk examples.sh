@@ -15,4 +15,4 @@
 6. awk regex:
    printf "Fool\nCool\nDoll\nbool" | awk '/[FbC]ool/'
 
-7. 
+7.

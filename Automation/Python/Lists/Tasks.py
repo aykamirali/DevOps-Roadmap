@@ -13,12 +13,14 @@ Click me to see the sample solution
 4. Write a Python program to get the smallest number from a list. Go to the editor
 Click me to see the sample solution
 
-5. Write a Python program to count the number of strings where the string length is 2 or more and the first and last character are same from a given list of strings. Go to the editor
+5. Write a Python program to count the number of strings where the string length is 2 or more and the
+first and last character are same from a given list of strings. Go to the editor
 Sample List : ['abc', 'xyz', 'aba', '1221']
 Expected Result : 2
 Click me to see the sample solution
 
-6. Write a Python program to get a list, sorted in increasing order by the last element in each tuple from a given list of non-empty tuples. Go to the editor
+6. Write a Python program to get a list, sorted in increasing order by the last element in each tuple
+from a given list of non-empty tuples. Go to the editor
 Sample List : [(2, 5), (1, 2), (4, 4), (2, 3), (2, 1)]
 Expected Result : [(2, 1), (1, 2), (2, 3), (4, 4), (2, 5)]
 Click me to see the sample solution
@@ -58,7 +60,8 @@ print("Result:")
 for numb in numbers:
     print(numb,end=' ')
 
-2. Write a Python program to round every number of a given list of numbers and print the total sum multiplied by the length of the list.
+2. Write a Python program to round every number of a given list of numbers and print
+the total sum multiplied by the length of the list.
 
 nums = [22.4, 4.0, -16.22, -9.10, 11.00, -12.22, 14.20, -5.20, 17.50]
 print("Original list: ", nums)
@@ -93,6 +96,13 @@ Expected Output : ['Green', 'White', 'Black']
 color = ['Red', 'Green', 'White', 'Black', 'Pink', 'Yellow']
 color = [x for (i,x) in enumerate(color) if i not in (0,4,5)]
 print(color)
+
+or
+
+for x in s:
+    if s.index(x) in [2,3]:
+        s.remove(x)
+print(s)
 
 13. Write a Python program to generate a 3*4*6 3D array whose each element is *.
    arr=[[["*" for col in range(3)] for col in range(3)] for row in range(5)]

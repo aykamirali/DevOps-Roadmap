@@ -1,5 +1,7 @@
 helm version --short
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add hashicorp https://helm.releases.hashicorp.com
+helm search repo hashicorp/vault
 helm search repo stable
 helm repo update
 helm search repo nginx   #search nginx

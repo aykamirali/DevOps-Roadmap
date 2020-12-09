@@ -45,3 +45,10 @@ git reset --hard HEAD
 to remove the last two commits:
 
 git reset --hard HEAD~2
+
+
+Changing the latest Git commit message
+If the message to be changed is for the latest commit to the repository, then the following commands are to be executed:
+
+git commit --amend -m "New message"
+git push --force repository-name branch-name

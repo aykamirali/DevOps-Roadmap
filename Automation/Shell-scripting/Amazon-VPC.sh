@@ -15,4 +15,4 @@ aws ec2 describe-vpn-gateways --filters 'Name=attachment.vpc-id,Values='$vpc | g
 aws ec2 describe-network-interfaces --filters 'Name=vpc-id,Values='$vpc | grep NetworkInterfaceId
 
 
-2. 
+2.

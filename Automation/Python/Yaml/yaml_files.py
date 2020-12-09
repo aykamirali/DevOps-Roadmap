@@ -1,5 +1,6 @@
 1. open and print yaml file
 
+
 import yaml
 with open("items.yaml") as f:
     txt=yaml.full_load(f)
@@ -15,4 +16,4 @@ dict_file = [{'sports' : ['soccer', 'football', 'basketball', 'cricket', 'hockey
 with open(r'E:\data\store_file.yaml', 'w') as file:
     documents = yaml.dump(dict_file, file)
 
-3. 
+3.

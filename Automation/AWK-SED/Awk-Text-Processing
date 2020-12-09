@@ -1,5 +1,8 @@
 awk '{print "Welcome to awk command tutorial"}'
+
+
 Sometimes the separator in some files is not space nor tab but something else.
+
 You can specify it using –F option:
 awk -F: '{print $1}' /etc/passwd
 

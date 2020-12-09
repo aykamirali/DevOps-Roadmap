@@ -1,13 +1,12 @@
 1. flatten Function
 flatten takes a list and replaces any elements that are lists with a flattened sequence of the list contents.
-
-»Examples
-> flatten([["a", "b"], [], ["c"]])
+flatten([["a", "b"], [], ["c"]])
 ["a", "b", "c"]
 If any of the nested lists also contain directly-nested lists, these too are flattened recursively:
 
-> flatten([[["a", "b"], []], ["c"]])
+flatten([[["a", "b"], []], ["c"]])
 ["a", "b", "c"]
+
 resource "aws_db_subnet_group" "db-network-subnet" {
   count       = var.is-dbcreate == true ? 1 : 0
   name_prefix = "${var.app-name}-${var.env}-${var.region}-"

@@ -1,5 +1,5 @@
-We use Hashicorp Vault to securely store application and database secrets. We maintain
-and update these secrets configurations via Ansible in our meetearnest/ansible Github
+We use Hashicorp Vault to securely store application and database secrets.
+We maintain and update these secrets configurations via Ansible in our meetearnest/ansible Github
 repo under the vault-populate role. Here you’ll find that a secrets file exists for
 every microservice, in addition to the database secrets and access policies that are
 required for pgauth. All secrets files are encrypted via ansible-vault before being

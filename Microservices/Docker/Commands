@@ -17,4 +17,9 @@
 15. docker image tag MyApp:latest myrepo/MyApp:latest
 16. docker login
 17. docker push myrepo/MyApp:latest
-18.
+18. docker network ls
+19. docker inspect
+20. docker run -d tomcat
+21. docker build -t name_con .
+22. docker rmi # remove images
+23. 

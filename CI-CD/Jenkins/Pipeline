@@ -1,0 +1,25 @@
+Pipeline
+ 	Definition
+ 	SCM
+ 	Repositories
+ 	Repository URL
+ 	Credentials
+
+Add
+
+Advanced...
+
+Add Repository
+ 	Branches to build
+ 	Branch Specifier (blank for 'any')
+
+Add Branch
+Delete Branch
+ 	Repository browser
+ 	Additional Behaviours
+Add
+ 	Script Path
+ 	Lightweight checkout
+Pipeline Syntax
+Save
+Apply

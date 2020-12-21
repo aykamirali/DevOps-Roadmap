@@ -1,0 +1,111 @@
+import jenkins.model.*
+import hudson.model.*
+import hudson.slaves.*
+import hudson.plugins.sshslaves.*
+
+@NonCPS
+def createNode(String name,String host,String credentials){
+  Agent agent = new DumbSlave(
+                    name,"EC2 Agent node description",
+                    "/home/ubuntu",
+                    "1",
+                    Node.Mode.NORMAL,
+                    name,
+                    //String host, int port, String credentialsId,
+                    //String jvmOptions, String javaPath, String prefixStartSlaveCmd, String suffixStartSlaveCmd,
+                    //Integer launchTimeoutSeconds, Integer maxNumRetries, Integer retryWaitTime
+                    new SSHLauncher(host,22,credentials,
+                        ,"","","","",
+                        0,0,0),
+                    new RetentionStrategy.Always(),
+                    new LinkedList())
+  Jenkins.instance.addNode(slave)
+}
+
+@NonCPS
+def deleteNode(String name){
+    Jenkins.instance.removeNode(Jenkins.instance.getNode(name))
+}
+
+String id = 'i-d735be0f'
+
+stage 'Start instance'
+try{
+    node {
+    wrap([$class: 'AmazonAwsCliBuildWrapper', credentialsId: '15ef882e-09c2-44b8-a87b-b66139b616f5', defaultRegion: 'us-west-2']) {
+        sh 'aws ec2 start-instances --instance-ids ' + id + ' > start.json'
+        sh 'aws ec2 wait instance-status-ok --instance-ids ' + id
+        sh 'aws ec2 describe-instances --instance-ids ' + id + ' > describe.json'
+        def describeText = readFile("describe.json")
+        def describe = new groovy.json.JsonSlurper().parseText(describeText)
+        createNode(id, describe.Reservations.Instances[0].PublicDnsName[0].trim(), 'sshPrivateKeyAws')
+    }
+    }
+    node(id){
+        //build job
+        sh 'echo I am a EC2'
+    }
+} finally {
+    node{
+    wrap([$class: 'AmazonAwsCliBuildWrapper', credentialsId: '15ef882e-09c2-44b8-a87b-b66139b616f5', defaultRegion: 'us-west-2']) {
+        sh 'aws ec2 stop-instances --instance-ids ' + id + ' > stop.json'
+}
+        deleteNode(id)
+    }
+}
+Without CloudBees AWS CLI Plugin
+
+mport jenkins.model.*
+import hudson.model.*
+import hudson.slaves.*
+import hudson.plugins.sshslaves.*
+
+@NonCPS
+def createNode(String name,String host,String credentials){
+  Agent agent = new DumbSlave(
+                    name,"EC2 Agent node description",
+                    "/home/ubuntu",
+                    "1",
+                    Node.Mode.NORMAL,
+                    name,
+                    //String host, int port, String credentialsId,
+                    //String jvmOptions, String javaPath, String prefixStartSlaveCmd, String suffixStartSlaveCmd,
+                    //Integer launchTimeoutSeconds, Integer maxNumRetries, Integer retryWaitTime
+                    new SSHLauncher(host,22,credentials,
+                        ,"","","","",
+                        0,0,0),
+                    new RetentionStrategy.Always(),
+                    new LinkedList())
+  Jenkins.instance.addNode(slave)
+}
+
+@NonCPS
+def deleteNode(String name){
+    Jenkins.instance.removeNode(Jenkins.instance.getNode(name))
+}
+
+String id = 'i-d735be0f'
+
+stage 'Start instance'
+try{
+    node {
+        sh 'aws ec2 start-instances --instance-ids ' + id + ' > start.json'
+        sh 'aws ec2 wait instance-status-ok --instance-ids ' + id
+        sh 'aws ec2 describe-instances --instance-ids ' + id + ' > describe.json'
+        def describeText = readFile("describe.json")
+        def describe = new groovy.json.JsonSlurper().parseText(describeText)
+        createNode(id, describe.Reservations.Instances[0].PublicDnsName[0].trim(), 'sshPrivateKeyAws')
+    }
+    node(id){
+        //build job
+        sh 'echo I am a EC2'
+    }
+} finally {
+    node{
+        sh 'aws ec2 stop-instances --instance-ids ' + id + ' > stop.json'
+        deleteNode(id)
+    }
+}
+
+
+

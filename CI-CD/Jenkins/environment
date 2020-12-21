@@ -1,0 +1,7 @@
+environment {
+    AWS_ACCESS_KEY_ID = credentials("UPATH_${params.env.toUpperCase()}_AWS_ACCESS_KEY")
+    AWS_SECRET_ACCESS_KEY = credentials("UPATH_${params.env.toUpperCase()}_AWS_ACCESS_SECRET")
+    AWS_DEFAULT_REGION = "${params.region}"
+    DOME9_USER = credentials("DOME9_USER_ID")
+    DOME9_PASS = credentials("DOME9_SECRET_KEY")
+}

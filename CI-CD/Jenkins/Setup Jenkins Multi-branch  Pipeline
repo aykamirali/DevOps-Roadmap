@@ -1,0 +1,43 @@
+Step 1: From the Jenkins home page create a “new item”.
+
+Step 2: Select the “Multibranch pipeline” from the option and click ok.
+
+Step 3: Click “Add a Source” and select Github.
+
+Step 4: Under the credentials field, select Jenkins, and create a credential
+        with your Github username and password.
+
+Step 5: Select the created credentials and provide your Github repo
+        to validate the credentials as shown below.
+
+Step 6: Under “Behaviours” select the required option matches your requirement.
+       You can either choose to discover all the branches in the repo or
+      only branches with a Pull Request.
+
+
+The pipeline can discover branches with a PR from a forked repo as well.
+
+
+There are additional behavior you can choose from the “add” button.
+
+For example, If you choose not to discover all the branches from the repo,
+you can opt for the regular expression or wildcard method to discover branches
+from the repo as shown below.
+
+
+Step 7: If you choose to have a different name for Jenkinsfile, you can do so
+ by specifying it in the build configuration. In the “Script Path” option you can
+ provide the required name. Make sure the Jenkinsfile is present in the repo with
+ the same name you provide in the pipeline configuration.
+
+
+ Also, Enable “Discard old builds” to keep only required build logs as shown below.
+
+
+ Step 8: Save all the job configurations. Jenkins scans the configured Github
+         repo for all the branches which has a PR raised.
+
+
+  The following image shows the job scanning the three branches, and since I haven’t
+  raised any pull request, Jenkins won’t create any branch-based pipeline.
+  I will show how to test the automatic pipeline creation after the webhook setup.

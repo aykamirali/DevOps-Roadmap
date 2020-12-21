@@ -1,0 +1,34 @@
+# ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of the month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12)
+# │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
+# │ │ │ │ │                                   7 is also Sunday on some systems)
+# │ │ │ │ │
+# │ │ │ │ │
+# * * * * * <command to execute>
+
+
+For example, the following clears the Apache error log at one minute past midnight (00:01) every day,
+assuming that the default shell for the cron user is Bourne shell compliant:
+
+1 0 * * * printf "" > /var/log/apache/error_log
+This example runs a shell program called export_dump.sh at 23:45 (11:45 PM) every Saturday.
+
+45 23 * * 6 /home/oracle/scripts/export_dump.sh
+Note: It is also possible to specify */n to run for every n-th interval of time. Also,
+specifying multiple specific time intervals can be done with commas (e.g., 1,2,3).
+The below would output "hello world" to the command line every 5th minute of every first,
+second and third hour (i.e., 01:00, 01:05, 01:10, up until 03:55).
+
+*/5 1,2,3 * * * echo hello world
+
+
+
+Entry	Description	Equivalent to
+@yearly (or @annually)	Run once a year at midnight of 1 January	0 0 1 1 *
+@monthly	Run once a month at midnight of the first day of the month	0 0 1 * *
+@weekly	Run once a week at midnight on Sunday morning	0 0 * * 0
+@daily (or @midnight)	Run once a day at midnight	0 0 * * *
+@hourly	Run once an hour at the beginning of the hour	0 * * * *
+@reboot	Run at startup	N/A

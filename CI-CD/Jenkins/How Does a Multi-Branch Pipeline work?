@@ -1,0 +1,15 @@
+1. When a developer creates a PR from a feature branch to
+   develop a branch, Github sends a webhook with the  PR information to Jenkins.
+
+2. Jenkins receives the PR and finds the relevant multibranch pipeline and
+   creates a feature branch pipeline automatically.
+
+3. It then runs the jobs with the steps mentioned in the Jenkinsfile from the feature branch.
+
+4. During checkout, the source and target branches in the PR gets merged.
+   The PR merge will be blocked on Github until a build status from Jenkins is returned.
+
+5. Once the build finishes, Jenkins will update the status to Github PR.
+   Now you will be able to merge the code.
+
+6. 

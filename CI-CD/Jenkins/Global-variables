@@ -1,0 +1,66 @@
+
+ 	Home directory	D:\Jenkins
+ 	System Message
+[Plain text] Preview
+Mask Passwords - Enable Globally
+ 	Enable Mask Passwords for ALL BUILDS
+High possibility of breaking things; use this only as a last resort. Read help before enabling!
+Mask Passwords - Parameters to automatically mask
+ 	Jira Release Version Parameter
+ 	Multi-line String Parameter
+ 	Active Choices Reactive Parameter
+ 	Choice Parameter
+ 	Credentials Parameter
+ 	Boolean Parameter
+ 	File Parameter
+ 	Moded Extended Choice Parameter
+ 	Non-Stored Password Parameter
+ 	Active Choices Parameter
+ 	Jira Issue Parameter
+ 	List Subversion tags (and more)
+ 	String Parameter
+ 	Active Choices Reactive Reference Parameter
+ 	Password Parameter
+ 	Run Parameter
+ 	Git Parameter
+Mask Passwords - Global name/password pairs
+
+Add
+Mask Passwords - Global Regexes
+
+Add
+Maven Project Configuration
+ 	Global MAVEN_OPTS
+
+ 	Local Maven Repository
+ 	# of executors
+ 	Labels
+ 	Usage
+ 	Quiet period
+ 	SCM checkout retry count
+ 	Default view
+Restrict project naming
+Jenkins Location
+ 	Jenkins URL
+ 	System Admin e-mail address
+Serve resource files from another domain
+ 	Resource root URL
+Without a resource root URL, resources will be served from the main domain with Content-Security-Policy set.
+Global properties
+Disable deferred wipeout on this node
+Environment variables
+ 	List of variables
+ 	Name
+ 	Value
+
+Delete
+ 	Name
+ 	Value
+
+Delete
+ 	Name
+ 	Value
+
+Delete
+ 	Name
+ 	Value	

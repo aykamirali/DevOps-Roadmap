@@ -1,0 +1,8 @@
+How restart pods in EKS ?
+
+Deployment in app namnespaces:
+
+deploys=`kubectl get deployments -n apps | tail -n1 | cut -d ' ' -f 1`
+for deploy in $deploys; do
+  kubectl rollout restart deployments/$deploy -n apps
+done

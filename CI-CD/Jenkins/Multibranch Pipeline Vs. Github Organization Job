@@ -1,0 +1,8 @@
+The only difference between multi-branch and organization project is that organizations
+can configure multi-branch pipelines for multiple repos.
+
+Mullitbranch pipleine can only configure pipelines for a single Git repository.
+ Whereas a Jenins Github organization project can automatically configure
+ multi-branch pipelines for all the repos in a Github organization.
+
+ 

@@ -1,0 +1,29 @@
+Build simple env in aws:
+
+1. Create VPC
+2. Create 1 public and 1 private subnet inside this VPC
+    learn what is regions and availibility zones in aws ?
+
+3. Add NACL to subnets and learn what is the NACLs?
+
+4. Create 1 ec2 instance in public subnet and 1 ec2 in private subnet.
+
+5. look what is the Route tables and internet gateways and why they are used and when ?
+
+6. Create 2 security group and attach to ec2 instances.
+
+7. try connect ec2 instances with ssh form MAC terminal.
+
+8. create s3 bucket and upload some files there and look versioning and other features of s3 buckets.
+
+9. look Route53 DNS resource, try to understand what is that. generally.
+
+10. check some AWS simple environment diagrams and watch this workshop: https://aws-quickstart.github.io/quickstart-aws-vpc/
+
+11. if have time: learn how work IAM users, groups and roles.
+
+    create IAM user add policy, create group and this user to that group, create role and add role to user.
+
+    create one role which gives ec2 instance to access s3 bucket etc.
+    
+12. Destroy all resources and create again several times for understanding.

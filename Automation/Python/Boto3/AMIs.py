@@ -1,6 +1,5 @@
 import datetime
 from dateutil.parser import parse
-
 import boto3
 
 

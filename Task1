@@ -1,0 +1,25 @@
+Set up :
+
+1. Create AWS account.
+AWS configure and aws cli to access AWS from terminal.
+Runs some aws command like aws s3 ls, aws ec2 describe instances, aws sts get caller identity. Find some other commands and run and check.
+
+2. Install terraform and run terraform help, check terraform version and other commands.
+
+3. Install ansible and check ansible -m ping localhost and finn some commands to understand how work ansible.
+
+4. Create Github account and configure access from terminal to Github, create example folder and file in Github, clone it to MAC add some changes, commit, push back to Git Repo.
+
+5. Configure Jenkins on MAC and look how it works.
+
+6. Install atom, Visual studio code and other tools.
+
+7. Install minikube and create Kubernetes node. and run some kubectyl commands.
+
+8. Install and configure Docker. Run docker image ls. create Docker file and create image, run some dockerfile to build container.
+
+9. install helm chart, package manager for kubernetes, run some comands to install packages with helm.
+
+10. if i forgot something ask Anar.
+
+11. Congratulations you are Jeniur DevOps Engineer with 6 month experience.

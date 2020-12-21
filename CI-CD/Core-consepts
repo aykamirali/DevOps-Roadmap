@@ -7,3 +7,16 @@ automatically built, tested, and prepared for production release. It expands on 
 by deploying all code changes to a testing environment, a production environment, or both after the
 build stage has been completed. Continuous delivery can be fully automated with a workflow process or
 partially automated with manual steps at critical points.
+
+
+Good video for CI/CD:
+
+
+https://www.youtube.com/watch?v=1ji_9scA2C4
+https://www.youtube.com/watch?v=Ozna0MS5D1E
+
+
+1. Configuring jenkins agents
+2. communicastion beetween master and slave
+3. Dynamic connection with master and slave.
+4. 

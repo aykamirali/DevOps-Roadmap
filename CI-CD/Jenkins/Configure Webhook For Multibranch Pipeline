@@ -1,0 +1,6 @@
+Step 1: Head over to the Github repo and click on the settings.
+
+Step 2: Select the webhook option at the left and click “Add Webhook” button.
+
+Step 3: Add your Jenkins URL followed by “/github-webhook/” under payload URL. Select
+        the content type as “application/json” and click “Add Webhook”

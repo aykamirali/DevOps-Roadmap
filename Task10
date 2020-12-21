@@ -1,0 +1,21 @@
+How to provide access to other users and roles after cluster creation ?
+
+For example if we create EKS with Jenkins server how to access cluster other users ?
+
+Initially, only the creator of the Amazon EKS cluster has system:masters permissions
+to configure the cluster. To extend system:masters permissions to other users and roles,
+you must add the aws-auth ConfigMap to the configuration of the Amazon EKS cluster.
+The ConfigMap allows other IAM entities, such as users and roles,
+to access the Amazon EKS cluster.
+
+https://aws.amazon.com/premiumsupport/knowledge-center/amazon-eks-cluster-access/
+
+
+
+
+1. Configure AWS with aws configure command
+2. aws sts get-caller-identity
+3.
+
+
+aws sts assume-role --role-arn arn:aws:iam:11122223333:role/cluster_creator --role-session-name test

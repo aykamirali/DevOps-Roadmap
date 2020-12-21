@@ -1,0 +1,24 @@
+Bitbucket Server trigger build after push
+Build after other projects are built
+Build periodically
+Build periodically with parameters
+Build when a change is pushed to BitBucket
+Enable Artifactory trigger
+Generic Webhook Trigger
+GitHub hook trigger for GITScm polling
+Poll SCM
+Disable this project
+Quiet period
+Trigger builds remotely (e.g., from scripts)
+
+
+
+Build periodically with parameters
+Schedule
+Spread load evenly by using ‘H 17 * * 1,3,5’ rather than ‘00 17 * * 1,3,5’
+
+triggers {
+     // Daily build trigger
+     parameterizedCron(env.BRANCH_NAME == 'upc2\0-pi2dev' ? '''
+         00 16 * * 1,2,3,4,7 %  stackName=upc;env=sit;region=us-west-2;awsAccountId=489715691119;buildType=daily;buildLabel=;branchName=upc20-pi2dev;virtuosoBranchName=refs/heads/upc20-pi2dev;cloudwatchAlarmEmailIds=palanikumar.tangapandian@contractors.roche.com,kulpreet.saluja@contractors.roche.com,aniz_mohammed.nizar@contractors.roche.com,sathish.mugithe@contractors.roche.com;uPath-Cloud-rest-api=uPath-Cloud-rest-api;deleteStack=false;triggerBuildBeforeDeploy=true;deployCoreStack=true;deploySchemaMigratorLambda=true;deployTenantOnboardingLambda=true;createVirtuosoSchema=true;createAlgoSchema=true;deployConfigService=true;deployI18nService=true;deployTileService=true;deployMetaDataService=true;deployROIService=true;deployWSAService=true;deployUploadService=true;deployConnectInService=true;deployConnectOutService=true;deployAlgoHer2=true;deployAlgoHer2Dualish=true;deployAlgoEr=true;deployAlgoPr=true;deployAlgoPdl=true;deployAlgoKI67=true;deployAlgoIVDPdl=true;deployAlgoIVDHer2Dualish=true;deployAlgoIVDHer2=true;deployUpathRestApp=true;deployApiGateway=false;executeOnboardTenant=true;executeDeleteTestTenant=true;executeCloudwatchAlarms=true;parallelizeDeleteStackAndBuild=true;upathKeyPairName=upc-sit-keypair;msNamespace=microservices;redisNamespace=redis;version='1.4';deployFrontend=true;frontendBranchName=upc20-pi2dev ''' :
+   '')

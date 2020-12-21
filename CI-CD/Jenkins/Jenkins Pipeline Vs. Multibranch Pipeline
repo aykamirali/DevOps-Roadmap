@@ -1,0 +1,10 @@
+A normal pipeline job is meant for building a single branch from the SCM and deploy to a single environment.
+
+A multibranch pipeline is meant for building multiple branches from a repository and deploy to multiple environments if required.
+
+A pipeline job supports both pipeline steps to be added in Jenkins configuration and form SCM.
+
+
+Use pipeline job for adhoc jobs, parameterised job executions and to debug pipeline as code.
+
+Do not use multibranch pipeline if you do not have a standard branching and CI/CD strategy.
